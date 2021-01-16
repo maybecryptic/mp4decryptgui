@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30717.126
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "mp4decryptgui", "mp4decrypt\mp4decryptgui.csproj", "{13B083F9-82EB-44D5-9EF6-23640B5E6B1A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{13B083F9-82EB-44D5-9EF6-23640B5E6B1A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{13B083F9-82EB-44D5-9EF6-23640B5E6B1A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{13B083F9-82EB-44D5-9EF6-23640B5E6B1A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{13B083F9-82EB-44D5-9EF6-23640B5E6B1A}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {36AC16C0-A71D-419F-A863-F1A40E970DBC}
+	EndGlobalSection
+EndGlobal
