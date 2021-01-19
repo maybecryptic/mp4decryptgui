@@ -21,3 +21,6 @@ do note this hasn't been extensively tested so it may not work with all amazon s
 3. get the subtitles and click the "get subs" box (it will get the link and download the subs right away)
 4. get the matching keys from the widevine decryptor plugin and paste them in by clicking the corresponding boxes
 5. click start and hope it doesn't explode
+
+# video tutorial
+https://lbry.tv/@cryptic:6/mp4decryptgui

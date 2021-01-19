@@ -57,11 +57,6 @@ namespace mp4decryptgui
 
 		private void Work()
 		{
-			// switching to work out of the directory instead of dragging/dropping
-			var name = subs.Text.Substring(subs.Text.LastIndexOf("/") + 1);
-
-			log("» starting");
-
 			var video = "";
 			foreach (var file in Directory.GetFiles(dir))
 				if (file.Contains("_video_"))
@@ -83,6 +78,8 @@ namespace mp4decryptgui
 				log("×× audio not found ××");
 				return;
 			}
+
+			log("» decrypting video");
 
 			// decrypt video
 			Process decryptv = new Process
@@ -124,11 +121,15 @@ namespace mp4decryptgui
 			log(decrypta.StandardOutput.ReadToEnd());
 			decrypta.WaitForExit();
 
+			var sub = false;
+
 			// subs are optional, but are always nice to include
-			if (File.Exists(name))
+			if (subs.Text.Length != 0 && File.Exists(subs.Text.Substring(subs.Text.LastIndexOf("/") + 1)))
 			{
 				log("» converting subtitles");
 
+				sub = true;
+				
 				// convert subs
 				Process convert = new Process
 				{
@@ -153,7 +154,7 @@ namespace mp4decryptgui
 				log("×× no subtitles found ××");
 			}
 
-			var parameters = "-o " + video.Replace(".mp4", ".mkv") + " --language 0:en \"" + video.Replace(".mp4", "-d.mp4") + "\" --language 0:en \"" + audio.Replace(".mp4", "-d.mp4") + "\" --language 0:en --default-track 0:no " + (File.Exists(name) ? "\"" + dir + name.Replace("ttml2", "srt") + "\"" : "");
+			var parameters = "-o " + video.Replace(".mp4", ".mkv") + " --language 0:en \"" + video.Replace(".mp4", "-d.mp4") + "\" --language 0:en \"" + audio.Replace(".mp4", "-d.mp4") + "\" --language 0:en --default-track 0:no " + (sub ? "\"" + dir + subs.Text.Substring(subs.Text.LastIndexOf("/") + 1).Replace("ttml2", "srt") + "\"" : "");
 			log("» muxing video with the following parameters");
 			log(parameters + Environment.NewLine);
 
@@ -193,10 +194,11 @@ namespace mp4decryptgui
 				File.Delete(audio);
 				File.Delete(video.Replace(".mp4", "-d.mp4"));
 				File.Delete(audio.Replace(".mp4", "-d.mp4"));
-				if (File.Exists(dir + name))
-					File.Delete(dir + name);
-				if (File.Exists(dir + name.Replace("ttml2", "srt")))
-					File.Delete(dir + name.Replace("ttml2", "srt"));
+				if (sub)
+				{
+					File.Delete(dir + subs.Text.Substring(subs.Text.LastIndexOf("/") + 1));
+					File.Delete(dir + subs.Text.Substring(subs.Text.LastIndexOf("/") + 1).Replace("ttml2", "srt"));
+				}
 			}
 			
 
