@@ -122,13 +122,15 @@ namespace mp4decryptgui
 			decrypta.WaitForExit();
 
 			var sub = false;
+			var ext = "";
 
 			// subs are optional, but are always nice to include
 			if (subs.Text.Length != 0 && File.Exists(subs.Text.Substring(subs.Text.LastIndexOf("/") + 1)))
 			{
-				log("» converting subtitles");
-
+				ext = subs.Text.Substring(subs.Text.LastIndexOf(".") + 1);
 				sub = true;
+
+				log("» converting subtitles");
 				
 				// convert subs
 				Process convert = new Process
@@ -139,7 +141,7 @@ namespace mp4decryptgui
 						RedirectStandardOutput = true,
 						RedirectStandardError = true,
 						CreateNoWindow = true,
-						Arguments = "/convert *.ttml2 srt",
+						Arguments = "/convert *." + ext + " srt",
 						FileName = Path.GetFileName(dir + "SubtitleEdit.exe"),
 						WorkingDirectory = Path.GetDirectoryName(dir + "SubtitleEdit.exe")
 					}
@@ -154,7 +156,7 @@ namespace mp4decryptgui
 				log("×× no subtitles found ××");
 			}
 
-			var parameters = "-o " + video.Replace(".mp4", ".mkv") + " --language 0:en \"" + video.Replace(".mp4", "-d.mp4") + "\" --language 0:en \"" + audio.Replace(".mp4", "-d.mp4") + "\" --language 0:en --default-track 0:no " + (sub ? "\"" + dir + subs.Text.Substring(subs.Text.LastIndexOf("/") + 1).Replace("ttml2", "srt") + "\"" : "");
+			var parameters = "-o " + video.Replace(".mp4", ".mkv") + " --language 0:en \"" + video.Replace(".mp4", "-d.mp4") + "\" --language 0:en \"" + audio.Replace(".mp4", "-d.mp4") + "\" --language 0:en --default-track 0:no " + (sub ? "\"" + dir + subs.Text.Substring(subs.Text.LastIndexOf("/") + 1).Replace(ext, "srt") + "\"" : "");
 			log("» muxing video with the following parameters");
 			log(parameters + Environment.NewLine);
 
@@ -197,7 +199,7 @@ namespace mp4decryptgui
 				if (sub)
 				{
 					File.Delete(dir + subs.Text.Substring(subs.Text.LastIndexOf("/") + 1));
-					File.Delete(dir + subs.Text.Substring(subs.Text.LastIndexOf("/") + 1).Replace("ttml2", "srt"));
+					File.Delete(dir + subs.Text.Substring(subs.Text.LastIndexOf("/") + 1).Replace(ext, "srt"));
 				}
 			}
 			
